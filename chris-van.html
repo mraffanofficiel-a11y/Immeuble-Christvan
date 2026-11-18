@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Immeuble Chris-Van | Résidence Meublée Haut Standing — Yaoundé Olembé</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <!-- FontAwesome CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        obsidian: '#0A0A0B',
+                        charcoal: '#141416',
+                        slateDark: '#1E1E22',
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#F3E5AB',
+                            dark: '#AA8A24',
+                            muted: 'rgba(212, 175, 55, 0.12)'
+                        },
+                        marble: '#F8F7F4'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>body.role-client .staff-only{display:none!important}</style>
+</head>
+<body class="bg-obsidian text-marble font-sans min-h-screen flex flex-col selection:bg-gold selection:text-obsidian overflow-hidden">
+
+    <!-- Écran de chargement (Splash Screen 4 secondes) -->
+    <div id="splash-screen" class="fixed inset-0 z-[100] bg-obsidian flex flex-col items-center justify-center p-6 transition-opacity duration-700">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.16),transparent_60%)] pointer-events-none"></div>
+        <div class="relative flex flex-col items-center text-center max-w-sm w-full">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-br from-gold via-gold-light to-gold-dark p-[2px] shadow-2xl shadow-gold/30 mb-6 animate-pulse">
+                <div class="w-full h-full rounded-[22px] bg-obsidian flex items-center justify-center">
+                    <span class="font-serif text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-gold-light to-gold tracking-tighter">
+                        CV
+                    </span>
+                </div>
+            </div>
+            <span class="text-[11px] uppercase tracking-[0.35em] text-gold font-semibold mb-2">Résidence Meublée Haut Standing</span>
+            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-white tracking-wider">
+                IMMEUBLE <span class="text-gold">CHRIS-VAN</span>
+            </h1>
+            <p class="text-xs text-gray-400 mt-2">Yaoundé • À proximité de la Pharmacie Olembé</p>
+
+            <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden mt-8 border border-white/5">
+                <div id="splash-progress-bar" class="h-full bg-gradient-to-r from-gold-dark via-gold to-gold-light w-0 rounded-full" style="transition: width 4s linear;"></div>
+            </div>
+            <span id="splash-status-text" class="text-[11px] text-gray-500 mt-3 tracking-widest uppercase">Connexion sécurisée aux 11 suites...</span>
+        </div>
+    </div>
+
+    <!-- Barre de Navigation Supérieure -->
+    <nav class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-obsidian font-serif font-bold text-lg sm:text-xl shadow-lg shadow-gold/20 shrink-0">
+                    CV
+                </div>
+                <div class="min-w-0">
+                    <span class="font-serif text-sm sm:text-xl font-bold tracking-wide text-white block leading-tight truncate">
+                        IMMEUBLE <span class="text-gold">CHRIS-VAN</span>
+                    </span>
+                    <span class="text-[9px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-gray-400 block truncate">Yaoundé Olembé • Synchro Live</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <a href="#suites-grid" class="hidden md:inline-block text-sm text-gray-300 hover:text-gold transition-colors px-3 py-2">
+                    Nos Suites
+                </a>
+                <a href="#tarifs-info" class="hidden md:inline-block text-sm text-gray-300 hover:text-gold transition-colors px-3 py-2">
+                    Tarifs & Formules
+                </a>
+                <div id="user-chip" class="hidden items-center gap-2 px-3 py-2 rounded-xl bg-charcoal border border-white/10 text-xs text-gray-300">
+                    <i class="fa-solid fa-user text-gold"></i>
+                    <span id="user-chip-text" class="max-w-[110px] truncate"></span>
+                    <button onclick="signOutUser()" title="Déconnexion" class="text-gray-400 hover:text-red-400 transition-colors"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+                <button onclick="openPinModal('admin')" class="staff-only flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-600/30 to-gold/20 hover:from-amber-600/40 hover:to-gold/30 border border-gold/40 text-xs sm:text-sm font-semibold text-gold transition-all shadow-md">
+                    <i class="fa-solid fa-crown text-gold"></i>
+                    <span>Espace Propriétaire</span>
+                </button>
+                <button onclick="openPinModal('secretariat')" class="staff-only flex items-center gap-1.5 px-3 py-2 rounded-xl bg-charcoal hover:bg-slateDark border border-white/10 hover:border-gold/50 text-xs sm:text-sm font-medium text-gray-300 hover:text-gold transition-all">
+                    <i class="fa-solid fa-shield-halved text-gold"></i>
+                    <span>Secrétariat</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Hero -->
+    <header class="relative overflow-hidden border-b border-white/10">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.14),transparent_55%)] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(10,10,11,0.4),rgba(10,10,11,0.98))] pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20">
+            <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gold-muted border border-gold/30 text-gold-light text-xs sm:text-sm font-medium">
+                        <i class="fa-solid fa-location-dot text-gold"></i>
+                        <span>Yaoundé Olembé — À proximité de la Pharmacie</span>
+                    </div>
+
+                    <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                        L'Excellence Hôtelière en <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-light to-gold">Résidence Privée</span>
+                    </h1>
+
+                    <p class="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl font-light">
+                        11 suites meublées haut standing avec gestion automatique des échéances et synchronisation instantanée sur tous les appareils de la réception et des clients.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <a href="#suites-grid" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-obsidian font-semibold text-sm sm:text-base shadow-lg shadow-gold/20 transition-all flex items-center gap-2">
+                            <span>Choisir une Suite</span>
+                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                        </a>
+                        <button onclick="openLookupModal()" class="px-5 py-3.5 rounded-xl bg-charcoal hover:bg-slateDark border border-white/15 text-white font-medium text-sm sm:text-base transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-ticket text-gold"></i>
+                            <span>Vérifier mon Pass</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="rounded-2xl bg-gradient-to-b from-charcoal to-obsidian border border-white/10 p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-5 gap-2">
+                            <div>
+                                <span class="text-xs uppercase tracking-widest text-gold font-semibold">Standard Chris-Van</span>
+                                <h2 class="font-serif text-xl text-white mt-0.5">11 Suites Identiques</h2>
+                            </div>
+                            <span class="px-3 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold shrink-0" id="hero-available-count">
+                                11 / 11 Libres
+                            </span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-gray-300">
+                            <li class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold shrink-0">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </span>
+                                <span><strong class="text-white">Synchro Transactionnelle</strong> — Mises à jour simultanées sans conflit</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold shrink-0">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                </span>
+                                <span><strong class="text-white">Auto-Libération & Archive</strong> — Libération auto et registre comptable préservé</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bandeau Tarification -->
+    <section id="tarifs-info" class="bg-charcoal/60 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl bg-obsidian/80 border border-white/10 flex items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-gray-400 block">Formule Sieste</span>
+                        <span class="text-sm text-gray-300">Créneau repos 6h max</span>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="font-serif text-xl font-bold text-gold">8 000 FCFA</span>
+                        <span class="text-[11px] text-gray-400 block">Forfait unique</span>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-obsidian/80 border border-white/10 flex items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-gray-400 block">Nuitée / Séjour 24h</span>
+                        <span class="text-sm text-gray-300">1 à 14 jours</span>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="font-serif text-xl font-bold text-white">15 000 FCFA</span>
+                        <span class="text-[11px] text-gray-400 block">par jour (24h)</span>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-gradient-to-r from-gold/15 to-obsidian border border-gold/40 flex items-center justify-between gap-3">
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-xs uppercase tracking-wider text-gold font-semibold">Long Séjour (≥ 15 jours)</span>
+                            <span class="px-2 py-0.5 rounded bg-gold text-obsidian text-[10px] font-bold">-20% AUTO</span>
+                        </div>
+                        <span class="text-sm text-gray-300">Réduction automatique</span>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="font-serif text-xl font-bold text-gold">12 000 FCFA</span>
+                        <span class="text-[11px] text-gold-light block">soit -20% / jour</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenu Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div id="suites-grid" class="scroll-mt-24">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Plan des 11 Suites (Synchronisation Temps Réel)</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-1">Sélectionnez votre Suite Numérotée</h2>
+                </div>
+                <div class="flex items-center gap-2 bg-charcoal p-1.5 rounded-xl border border-white/10 self-start">
+                    <button onclick="setFilter('all')" id="filter-all" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gold text-obsidian transition-all">
+                        Toutes (11)
+                    </button>
+                    <button onclick="setFilter('libre')" id="filter-libre" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-all">
+                        Disponibles
+                    </button>
+                    <button onclick="setFilter('reserve')" id="filter-reserve" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-all">
+                        Réservées
+                    </button>
+                </div>
+            </div>
+
+            <div id="rooms-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                <!-- Rempli par JavaScript -->
+            </div>
+        </div>
+
+        <!-- Console Secrétariat -->
+        <section id="admin-section" class="hidden mt-16 pt-10 border-t border-gold/30 scroll-mt-24">
+            <div class="rounded-2xl bg-charcoal border border-gold/40 p-6 sm:p-8 shadow-2xl">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/10">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold font-semibold mb-1">
+                            <i class="fa-solid fa-user-shield"></i> Console Réception & Secrétariat
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-white">Validation des Paiements & Codes d'Accès</h3>
+                        <p class="text-sm text-gray-400 mt-1">Vérifiez les codes uniques avant la remise des cartes magnétiques.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="openManualIntakeModal()" class="px-4 py-2.5 rounded-xl bg-gold hover:bg-gold-light text-obsidian font-bold text-xs transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle"></i> Enregistrer Réservation Reçue
+                        </button>
+                        <button onclick="closeAdminSection()" class="px-4 py-2.5 rounded-xl bg-slateDark hover:bg-white/10 border border-white/15 text-xs font-semibold text-white transition-all">
+                            <i class="fa-solid fa-lock mr-1.5 text-gold"></i> Verrouiller
+                        </button>
+                    </div>
+                </div>
+
+                <div class="my-6 p-4 sm:p-5 rounded-xl bg-obsidian border border-white/10">
+                    <label class="block text-xs uppercase tracking-wider text-gold font-semibold mb-2">
+                        Contrôle d'Accès à l'Accueil (Vérifier le code unique du client ex: CV-YDE-1-842)
+                    </label>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="admin-verify-input" placeholder="Ex: CV-YDE-1-842" class="flex-1 px-4 py-3 rounded-xl bg-charcoal border border-white/15 text-white placeholder-gray-500 text-sm uppercase focus:outline-none focus:border-gold">
+                        <button onclick="verifyCodeInAdmin()" class="px-6 py-3 rounded-xl bg-gold hover:bg-gold-light text-obsidian font-semibold text-sm transition-all">
+                            Vérifier le Code
+                        </button>
+                    </div>
+                    <div id="admin-verify-result" class="mt-3 hidden text-sm"></div>
+                </div>
+
+                <div class="my-6 p-4 sm:p-5 rounded-xl bg-red-950/20 border border-red-500/30">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <div class="text-xs uppercase tracking-wider text-red-400 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Zone de test — Réinitialiser le système</div>
+                            <p class="text-xs text-gray-400 mt-1">Remet les 11 suites à « Disponible » et efface toutes les réservations et archives, pour tous les appareils. À utiliser uniquement pour tester.</p>
+                        </div>
+                        <button id="reset-open-btn" onclick="openResetConfirm()" class="px-4 py-2.5 rounded-xl bg-red-600/90 hover:bg-red-500 text-white font-bold text-xs transition-all shrink-0">
+                            <i class="fa-solid fa-rotate-left mr-1.5"></i> Réinitialiser le système
+                        </button>
+                    </div>
+                    <div id="reset-confirm-box" class="hidden mt-4 pt-4 border-t border-red-500/20">
+                        <p class="text-xs text-red-300 mb-2">Attention : s'il y a des clients dans les suites, ils n'apparaîtront plus. Tapez <strong>REINITIALISER</strong> pour confirmer.</p>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <input type="text" id="reset-confirm-input" autocomplete="off" placeholder="REINITIALISER" class="flex-1 px-4 py-2.5 rounded-xl bg-obsidian border border-red-500/40 text-white text-sm uppercase focus:outline-none focus:border-red-400">
+                            <button onclick="performSystemReset()" class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs">Tout remettre à zéro</button>
+                            <button onclick="cancelReset()" class="px-4 py-2.5 rounded-xl bg-slateDark hover:bg-white/10 border border-white/15 text-white font-semibold text-xs">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-gold">
+                                <th class="py-3.5 px-4">Suite</th>
+                                <th class="py-3.5 px-4">Statut</th>
+                                <th class="py-3.5 px-4">Code Unique</th>
+                                <th class="py-3.5 px-4">Client & CNI</th>
+                                <th class="py-3.5 px-4">Séjour & Échéance Fin</th>
+                                <th class="py-3.5 px-4">Mode Paiement</th>
+                                <th class="py-3.5 px-4 text-right">Action / État</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body" class="divide-y divide-white/5 text-sm">
+                            <!-- Rempli par JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-10 pt-6 border-t border-white/10">
+                    <div class="text-xs uppercase tracking-wider text-gold font-semibold mb-1"><i class="fa-solid fa-box-archive mr-1.5"></i> Archives des anciens clients</div>
+                    <p class="text-xs text-gray-400 mb-4">Séjours terminés, expirés ou annulés. Ils restent ici après la libération automatique de la suite.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-gold">
+                                    <th class="py-3 px-4">Réservé le</th>
+                                    <th class="py-3 px-4">Suite</th>
+                                    <th class="py-3 px-4">Code</th>
+                                    <th class="py-3 px-4">Client & CNI</th>
+                                    <th class="py-3 px-4">Séjour & Fin</th>
+                                    <th class="py-3 px-4 text-right">État</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-archive-body" class="divide-y divide-white/5 text-xs"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Console Propriétaire -->
+        <section id="owner-section" class="hidden mt-16 pt-10 border-t border-amber-500/40 scroll-mt-24">
+            <div class="rounded-2xl bg-gradient-to-b from-charcoal via-obsidian to-obsidian border-2 border-amber-500/50 p-6 sm:p-8 shadow-2xl">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/10">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-amber-400 font-bold mb-1">
+                            <i class="fa-solid fa-crown text-amber-400"></i> Espace Exclusif Propriétaire (La Patronne)
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-white">Registre Central & Archives Comptables Permanentes</h3>
+                        <p class="text-sm text-gray-400 mt-1">Historique complet et inaltérable des paiements validés, séjours en cours et séjours expirés.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">
+                            Chiffre d'Affaires Cumulé Validé : <span id="owner-total-revenue" class="font-serif text-base text-white ml-1">0 FCFA</span>
+                        </div>
+                        <button onclick="closeOwnerSection()" class="px-4 py-2.5 rounded-xl bg-slateDark hover:bg-white/10 border border-white/15 text-xs font-semibold text-white transition-all">
+                            <i class="fa-solid fa-lock mr-1.5 text-amber-400"></i> Verrouiller
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 my-6">
+                    <div class="p-4 rounded-xl bg-charcoal border border-white/10">
+                        <span class="text-xs uppercase tracking-wider text-gray-400 block">Total Dossiers Archivés</span>
+                        <span id="owner-stat-total" class="font-serif text-2xl font-bold text-white mt-1 block">0</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-charcoal border border-white/10">
+                        <span class="text-xs uppercase tracking-wider text-gray-400 block">Paiements Encaissés</span>
+                        <span id="owner-stat-validated" class="font-serif text-2xl font-bold text-emerald-400 mt-1 block">0</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-charcoal border border-white/10">
+                        <span class="text-xs uppercase tracking-wider text-gray-400 block">En attente versement</span>
+                        <span id="owner-stat-pending" class="font-serif text-2xl font-bold text-amber-400 mt-1 block">0</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-charcoal border border-white/10">
+                        <span class="text-xs uppercase tracking-wider text-gray-400 block">Répartition Modes</span>
+                        <span id="owner-stat-modes" class="text-xs text-gray-300 mt-1 block">Espèces: 0 | Mobile: 0</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <h4 class="font-serif text-lg text-white mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-database text-amber-400"></i> Journal Inaltérable (Actifs & Expirés Conservés)
+                    </h4>
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-amber-400">
+                                <th class="py-3.5 px-4">Date Enregistrement</th>
+                                <th class="py-3.5 px-4">Suite</th>
+                                <th class="py-3.5 px-4">Code Unique</th>
+                                <th class="py-3.5 px-4">Client & Coordonnées</th>
+                                <th class="py-3.5 px-4">Fin de Séjour (Échéance)</th>
+                                <th class="py-3.5 px-4">Mode & Montant</th>
+                                <th class="py-3.5 px-4 text-right">État du Dossier</th>
+                            </tr>
+                        </thead>
+                        <tbody id="owner-table-body" class="divide-y divide-white/5 text-sm">
+                            <!-- Rempli par JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal border-t border-white/10 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+            <div class="flex items-center gap-2">
+                <span class="font-serif font-bold text-white text-sm">IMMEUBLE <span class="text-gold">CHRIS-VAN</span></span>
+                <span>•</span>
+                <span>Yaoundé Olembé, Proximité Pharmacie</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://wa.me/447817988105" target="_blank" class="hover:text-gold transition-colors flex items-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
+                    <span>Réception WhatsApp : +44 7817 988105</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1 : Réservation -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-charcoal border border-gold/40 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative my-8">
+            <button onclick="closeBookingModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="mb-6">
+                <span class="text-xs uppercase tracking-widest text-gold font-semibold">Check-in Digital Cloud</span>
+                <h3 id="modal-suite-title" class="font-serif text-2xl font-bold text-white mt-1">Réserver Chris Van 1</h3>
+                <p class="text-xs text-gray-400 mt-1">Libération automatique programmée à l'échéance du séjour.</p>
+            </div>
+            <form id="booking-form" onsubmit="handleBookingSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Formule de séjour</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="formule" value="nuitee" checked onchange="updatePricing()" class="peer sr-only">
+                            <div class="p-3 rounded-xl bg-obsidian border border-white/10 peer-checked:border-gold peer-checked:bg-gold/10 transition-all text-center">
+                                <span class="block text-sm font-semibold text-white">Nuitée / 24h</span>
+                                <span class="block text-xs text-gold mt-0.5">15 000 FCFA / jour</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="formule" value="sieste" onchange="updatePricing()" class="peer sr-only">
+                            <div class="p-3 rounded-xl bg-obsidian border border-white/10 peer-checked:border-gold peer-checked:bg-gold/10 transition-all text-center">
+                                <span class="block text-sm font-semibold text-white">Sieste</span>
+                                <span class="block text-xs text-gold mt-0.5">8 000 FCFA (6h max)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div id="days-field-wrapper">
+                        <label for="input-days" class="block text-xs font-medium text-gray-300 mb-1.5">Nombre de jours (24h)</label>
+                        <input type="number" id="input-days" min="1" max="90" value="1" oninput="updatePricing()" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div id="arrival-field-wrapper">
+                        <label for="input-arrival" class="block text-xs font-medium text-gray-300 mb-1.5">Date & Heure d'arrivée</label>
+                        <input type="datetime-local" id="input-arrival" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="input-name" class="block text-xs font-medium text-gray-300 mb-1.5">Nom & Prénom complets *</label>
+                    <input type="text" id="input-name" required placeholder="Ex: Jean-Marc Mbarga" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-gold">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="input-phone" class="block text-xs font-medium text-gray-300 mb-1.5">Téléphone WhatsApp *</label>
+                        <input type="tel" id="input-phone" required placeholder="Ex: +237 699 00 00 00" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label for="input-cni" class="block text-xs font-medium text-gray-300 mb-1.5">N° CNI ou Passeport *</label>
+                        <input type="text" id="input-cni" required placeholder="Obligatoire pour la carte" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white placeholder-gray-500 text-sm uppercase focus:outline-none focus:border-gold">
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-obsidian border border-gold/30 space-y-2">
+                    <div class="flex justify-between text-xs text-gray-400">
+                        <span>Tarif de base :</span>
+                        <span id="calc-base">15 000 FCFA</span>
+                    </div>
+                    <div id="calc-discount-row" class="hidden flex justify-between text-xs text-emerald-400 font-medium">
+                        <span>Réduction Long Séjour (-20% dès 15j) :</span>
+                        <span id="calc-discount">- 0 FCFA</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-white/10">
+                        <span class="text-sm font-semibold text-white">Total à régler :</span>
+                        <span id="calc-total" class="font-serif text-xl font-bold text-gold">15 000 FCFA</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+                    <button type="button" onclick="closeBookingModal()" class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-gray-300 hover:text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 shrink-0">
+                        <i class="fa-solid fa-arrow-left text-xs"></i>
+                        <span>Retour</span>
+                    </button>
+                    <button type="submit" class="flex-1 py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Confirmer & WhatsApp</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2 : Pass de Réservation -->
+    <div id="pass-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-charcoal border border-gold rounded-2xl max-w-md w-full p-6 sm:p-7 shadow-2xl relative my-8">
+            <button onclick="closePassModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 flex items-center justify-center text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="pass-header-info" class="text-center mb-5">
+                <div id="pass-icon-container" class="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                </div>
+                <h3 id="pass-main-title" class="font-serif text-2xl font-bold text-white">Pass de Réservation Émis</h3>
+                <p id="pass-subtitle-info" class="text-xs text-gray-400 mt-1">Envoyez cette fiche sur WhatsApp à la réception.</p>
+            </div>
+
+            <div class="rounded-2xl bg-obsidian border border-gold/40 p-5 relative overflow-hidden mb-5">
+                <div class="flex items-center justify-between border-b border-dashed border-white/15 pb-3 mb-3 gap-2">
+                    <div>
+                        <span class="text-[10px] uppercase tracking-widest text-gold block">Immeuble Chris-Van</span>
+                        <span id="pass-suite" class="font-serif text-xl font-bold text-white">Chris Van 1</span>
+                    </div>
+                    <span id="pass-status-badge" class="px-2.5 py-1 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-semibold">
+                        En attente paiement
+                    </span>
+                </div>
+                <div class="bg-charcoal rounded-xl p-3 text-center border border-white/10 mb-3">
+                    <span class="text-[10px] uppercase tracking-widest text-gray-400 block">Code Unique d'Accès</span>
+                    <div class="flex items-center justify-center gap-2 mt-1">
+                        <span id="pass-code" class="font-mono text-xl sm:text-2xl font-bold tracking-wider text-gold">CV-YDE-1-000</span>
+                        <button onclick="copyPassCode()" title="Copier le code" class="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-gray-300 hover:text-gold transition-colors">
+                            <i class="fa-regular fa-copy text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="space-y-1.5 text-xs">
+                    <div class="flex justify-between gap-2">
+                        <span class="text-gray-400">Client :</span>
+                        <span id="pass-client" class="text-white font-medium text-right">-</span>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <span class="text-gray-400">CNI / Passeport :</span>
+                        <span id="pass-cni" class="text-white font-mono text-right">-</span>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <span class="text-gray-400">Séjour :</span>
+                        <span id="pass-stay" class="text-white text-right">-</span>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <span class="text-gray-400">Échéance Fin :</span>
+                        <span id="pass-expiry" class="text-amber-400 font-semibold text-right">-</span>
+                    </div>
+                    <div class="flex justify-between pt-2 border-t border-white/10 gap-2">
+                        <span class="text-gray-300 font-semibold">Montant Total :</span>
+                        <span id="pass-amount" class="text-gold font-bold text-sm">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pass-actions-container" class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2.5">
+                <button type="button" onclick="closePassModal()" class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-gray-300 hover:text-white text-xs sm:text-sm font-semibold transition-colors flex items-center justify-center gap-2 shrink-0">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span>Retour</span>
+                </button>
+                <a id="pass-whatsapp-link" href="#" target="_blank" class="flex-1 py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Envoyer sur WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3 : Saisie Manuelle Secrétaire -->
+    <div id="manual-intake-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-charcoal border border-gold/40 rounded-2xl max-w-md w-full p-6 shadow-2xl relative my-8">
+            <button onclick="closeManualIntakeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="mb-5">
+                <span class="text-xs uppercase tracking-widest text-gold font-semibold">Base Cloud Secrétariat</span>
+                <h3 class="font-serif text-xl font-bold text-white mt-0.5">Enregistrer une Réservation Client</h3>
+                <p class="text-xs text-gray-400 mt-1">Générez instantanément un code unique pour la suite choisie.</p>
+            </div>
+            <form onsubmit="handleManualIntakeSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Sélectionner la Suite *</label>
+                    <select id="intake-suite-id" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                        <!-- Rempli par JS -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Nom & Prénom du Client *</label>
+                    <input type="text" id="intake-name" required placeholder="Ex: Jean-Marc Mbarga" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Téléphone WhatsApp *</label>
+                        <input type="tel" id="intake-phone" required placeholder="+237..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">N° CNI / Passeport *</label>
+                        <input type="text" id="intake-cni" required placeholder="CNI..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm uppercase focus:outline-none focus:border-gold">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Formule *</label>
+                        <select id="intake-formule" onchange="updateIntakePricing()" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                            <option value="nuitee">Nuitée / 24h (15 000 FCFA)</option>
+                            <option value="sieste">Sieste (8 000 FCFA)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Nombre de jours</label>
+                        <input type="number" id="intake-days" min="1" value="1" oninput="updateIntakePricing()" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                    </div>
+                </div>
+                <div class="p-3 rounded-xl bg-obsidian border border-white/10 flex justify-between items-center text-xs">
+                    <span class="text-gray-400">Montant total calculé :</span>
+                    <span id="intake-total-preview" class="font-serif text-lg font-bold text-gold">15 000 FCFA</span>
+                </div>
+                <div class="flex items-center gap-3 pt-2">
+                    <button type="button" onclick="closeManualIntakeModal()" class="w-1/3 py-3 rounded-xl bg-slateDark hover:bg-white/10 border border-white/15 text-white font-semibold text-xs transition-all flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-arrow-left"></i> Retour
+                    </button>
+                    <button type="submit" class="w-2/3 py-3 rounded-xl bg-gold hover:bg-gold-light text-obsidian font-bold text-xs transition-all">
+                        Générer Code & Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4 : Validation Paiement -->
+    <div id="validate-payment-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-charcoal border border-gold/40 rounded-2xl max-w-md w-full p-6 shadow-2xl relative my-8">
+            <button onclick="closeValidatePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="mb-5">
+                <span class="text-xs uppercase tracking-widest text-gold font-semibold">Validation Sécurisée Anti-Fraude</span>
+                <h3 class="font-serif text-xl font-bold text-white mt-0.5">Préciser le Paiement & Valider</h3>
+                <p id="validate-modal-subtitle" class="text-xs text-gray-400 mt-1">Sélectionnez le mode de règlement effectué par le client.</p>
+            </div>
+            <form onsubmit="handleValidatePaymentSubmit(event)" class="space-y-4">
+                <input type="hidden" id="validate-suite-id">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Mode de Paiement *</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="operator" value="Orange Money" checked class="peer sr-only">
+                            <div class="p-2.5 rounded-xl bg-obsidian border border-white/10 peer-checked:border-orange-500 peer-checked:bg-orange-500/15 transition-all text-center">
+                                <span class="block text-xs font-bold text-orange-400">Orange</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="operator" value="MTN MoMo" class="peer sr-only">
+                            <div class="p-2.5 rounded-xl bg-obsidian border border-white/10 peer-checked:border-yellow-500 peer-checked:bg-yellow-500/15 transition-all text-center">
+                                <span class="block text-xs font-bold text-yellow-400">MTN MoMo</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="operator" value="Espèces (Guichet)" class="peer sr-only">
+                            <div class="p-2.5 rounded-xl bg-obsidian border border-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/15 transition-all text-center">
+                                <span class="block text-xs font-bold text-emerald-400">Espèces</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Téléphone émetteur ou Référence guichet *</label>
+                    <input type="text" id="validate-sender-phone" required placeholder="Ex: +237 699... ou N° reçu" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                </div>
+                <div class="p-3 rounded-xl bg-obsidian border border-white/10 text-xs space-y-1">
+                    <div class="flex justify-between text-gray-400">
+                        <span>Client :</span>
+                        <span id="validate-client-name" class="text-white font-medium">--</span>
+                    </div>
+                    <div class="flex justify-between text-gray-400">
+                        <span>Code Unique :</span>
+                        <span id="validate-code-text" class="text-gold font-mono font-bold">--</span>
+                    </div>
+                    <div class="flex justify-between text-gray-400">
+                        <span>Montant :</span>
+                        <span id="validate-amount" class="text-gold font-bold">--</span>
+                    </div>
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Valider Définitivement (Activer Séjour)</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 5 : Code PIN -->
+    <div id="pin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-charcoal border border-gold/40 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
+            <button onclick="closePinModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div id="pin-modal-icon" class="w-11 h-11 rounded-xl bg-gold/15 border border-gold/30 text-gold flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 id="pin-modal-title" class="font-serif text-xl font-bold text-white">Accès Secrétariat</h3>
+                <p id="pin-modal-subtitle" class="text-xs text-gray-400 mt-1">Entrez le code PIN (défaut : 2026)</p>
+            </div>
+            <form onsubmit="handlePinSubmit(event)" class="space-y-4">
+                <input type="hidden" id="pin-target-section">
+                <input type="password" id="pin-input" maxlength="6" placeholder="••••" required class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-center text-white text-xl tracking-[0.5em] focus:outline-none focus:border-gold">
+                <p id="pin-error" class="hidden text-xs text-red-400 text-center">Code PIN incorrect. Réessayez.</p>
+                <button type="submit" class="w-full py-3 rounded-xl bg-gold hover:bg-gold-light text-obsidian font-bold text-sm transition-all">
+                    Déverrouiller
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 6 : Recherche Pass -->
+    <div id="lookup-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-charcoal border border-white/15 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeLookupModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="font-serif text-xl font-bold text-white mb-1">Retrouver mon Pass</h3>
+            <p class="text-xs text-gray-400 mb-4">Saisissez votre code unique (ex: CV-YDE-1-842) ou votre CNI.</p>
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="lookup-query" placeholder="Code Pass ou N° CNI..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-white text-sm uppercase focus:outline-none focus:border-gold">
+                <button onclick="performClientLookup()" class="px-4 py-2.5 rounded-xl bg-gold text-obsidian font-semibold text-sm">
+                    Rechercher
+                </button>
+            </div>
+            <div id="lookup-result" class="text-sm"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 px-4 py-3 rounded-xl bg-charcoal border border-gold text-white text-sm shadow-2xl">
+        <i class="fa-solid fa-circle-check text-gold"></i>
+        <span id="toast-message">Action effectuée</span>
+    </div>
+<script>
+        // =========================================================================
+        // CONFIGURATION FIREBASE OFFICIELLE — IMMEUBLE CHRIS-VAN
+        // =========================================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQApRWsuS5B3vFWJklgwKr1AtXwYRDGxU",
+            authDomain: "chrisvan-b8e70.firebaseapp.com",
+            databaseURL: "https://chrisvan-b8e70-default-rtdb.firebaseio.com",
+            projectId: "chrisvan-b8e70",
+            storageBucket: "chrisvan-b8e70.firebasestorage.app",
+            messagingSenderId: "593905861448",
+            appId: "1:593905861448:web:5639a5c080c63f27b2697d",
+            measurementId: "G-MNQBTG6YKK"
+        };
+
+        let db = null;
+        let isFirebaseConnected = false;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+            if (typeof firebase.analytics === 'function') {
+                firebase.analytics();
+            }
+            isFirebaseConnected = true;
+        } catch (e) {
+            console.warn("Mode secours localStorage activé :", e);
+        }
+
+        const WHATSAPP_NUMBER = "447817988105";
+        const SECRETARIAT_PIN = "2026";
+        const OWNER_PIN = "8888";
+        const LOCAL_SUITES_KEY = "chris_van_suites_v3";
+        const LOCAL_HISTORY_KEY = "chris_van_history_v3";
+
+        let currentFilter = "all";
+        let activeRoomId = null;
+        let suites = getDefaultSuites();
+        let historyRecords = []; // Registre permanent et inaltérable pour La Patronne
+
+        function getDefaultSuites() {
+            const list = [];
+            for (let i = 1; i <= 11; i++) {
+                let levelLabel = i <= 4 ? "Niveau Supérieur" : (i <= 8 ? "Niveau Intermédiaire" : "Niveau Bas");
+                list.push({
+                    id: i,
+                    name: `Chris Van ${i}`,
+                    level: levelLabel,
+                    status: "libre", // 'libre' | 'attente' | 'reserve'
+                    validated: false,
+                    booking: null,
+                    pending: []
+                });
+            }
+            return list;
+        }
+
+        // =========================================================================
+        // ÉTAT RÉEL DE LA SYNCHRONISATION (affiché en bas à gauche)
+        // =========================================================================
+        let syncMode = "local"; // 'live' | 'offline' | 'denied' | 'local'
+        function setSyncStatus(mode) {
+            syncMode = mode;
+            const el = document.getElementById("sync-status");
+            if (el) {
+                const map = {
+                    live: ["● Synchro en direct", "border-emerald-500/40 text-emerald-300"],
+                    offline: ["● Hors ligne — reconnexion…", "border-amber-500/40 text-amber-300"],
+                    denied: ["● Base refusée (règles Firebase)", "border-red-500/40 text-red-300"],
+                    local: ["● Mode local — non synchronisé", "border-red-500/40 text-red-300"]
+                };
+                el.textContent = map[mode][0];
+                el.className = "px-3 py-1.5 rounded-full text-[11px] font-semibold border bg-obsidian/95 shadow-lg " + map[mode][1];
+            }
+            try { renderRoomsGrid(); } catch (e) {}
+        }
+
+        // =========================================================================
+        // ÉCOUTEURS TEMPS RÉEL FIREBASE (SUITES & ARCHIVES PERMANENTES)
+        // =========================================================================
+        let realtimeStarted = false;
+        function startRealtime() {
+            if (realtimeStarted || !(isFirebaseConnected && db)) return;
+            realtimeStarted = true;
+            db.ref(".info/connected").on("value", (snap) => {
+                if (syncMode !== "denied") setSyncStatus(snap.val() ? "live" : "offline");
+            });
+            // 1. Écoute en direct de l'état des 11 suites
+            db.ref("suites").on("value", (snapshot) => {
+                const data = snapshot.val();
+                if (data && Array.isArray(data) && data.length === 11) {
+                    suites = data;
+                } else {
+                    // Initialisation atomique uniquement si inexistant
+                    db.ref("suites").transaction((currentData) => {
+                        if (!currentData || !Array.isArray(currentData) || currentData.length !== 11) {
+                            return getDefaultSuites();
+                        }
+                        return; // Annule si déjà créé par un autre client
+                    });
+                }
+                renderAll();
+            }, (error) => {
+                console.error("Erreur lecture Firebase suites:", error);
+                setSyncStatus("denied");
+            });
+
+            // 2. Écoute en direct de l'historique permanent (ne s'efface jamais à l'expiration)
+            db.ref("history").on("value", (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    historyRecords = Object.values(data).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                } else {
+                    historyRecords = [];
+                }
+                renderOwnerDashboard();
+            }, (error) => {
+                console.error("Erreur lecture Firebase history:", error);
+            });
+        }
+        if (!(isFirebaseConnected && db)) {
+            // Mode secours localStorage
+            setTimeout(() => setSyncStatus("local"), 0);
+            try {
+                suites = JSON.parse(localStorage.getItem(LOCAL_SUITES_KEY)) || getDefaultSuites();
+                historyRecords = JSON.parse(localStorage.getItem(LOCAL_HISTORY_KEY)) || [];
+            } catch (e) {
+                suites = getDefaultSuites();
+                historyRecords = [];
+            }
+        }
+
+        // Sauvegarde atomique d'une suite spécifique via TRANSACTION FIREBASE (Anti-écrasement simultané)
+        function updateSingleSuiteTransaction(suiteId, updateCallback, onSuccessCallback) {
+            const suiteIndex = suiteId - 1;
+            if (isFirebaseConnected && db) {
+                db.ref(`suites/${suiteIndex}`).transaction((currentSuite) => {
+                    if (!currentSuite) {
+                        const def = getDefaultSuites()[suiteIndex];
+                        return updateCallback(def);
+                    }
+                    return updateCallback(currentSuite);
+                }, (error, committed, snapshot) => {
+                    if (error) {
+                        console.error("Échec transaction Firebase:", error);
+                        setSyncStatus("denied");
+                        showToast("Erreur réseau lors de la synchronisation.");
+                    } else if (committed && onSuccessCallback) {
+                        onSuccessCallback(snapshot.val());
+                    }
+                });
+            } else {
+                // Mode local secours
+                const result = updateCallback(suites[suiteIndex]);
+                if (result === undefined) return; // transaction annulée
+                suites[suiteIndex] = result;
+                localStorage.setItem(LOCAL_SUITES_KEY, JSON.stringify(suites));
+                renderAll();
+                if (onSuccessCallback) onSuccessCallback(suites[suiteIndex]);
+            }
+        }
+
+        // =========================================================================
+        // RÉSERVATIONS EN ATTENTE MULTIPLES + PASS DE CET APPAREIL
+        // Une suite en attente reste réservable par les autres clients.
+        // Le client qui détient déjà un pass actif pour la suite ne peut plus la réserver.
+        // La première réservation payée (validée) obtient la suite.
+        // =========================================================================
+        const MY_PASSES_KEY = "chris_van_mypasses_v1";
+        function getMyPasses() {
+            try { return JSON.parse(localStorage.getItem(MY_PASSES_KEY)) || []; } catch (e) { return []; }
+        }
+        function addMyPass(code) {
+            try {
+                const list = getMyPasses();
+                if (!list.includes(code)) { list.push(code); localStorage.setItem(MY_PASSES_KEY, JSON.stringify(list)); }
+            } catch (e) {}
+        }
+        function isExpiredBooking(b) {
+            return !!(b && b.expiryTimestamp && Date.now() >= b.expiryTimestamp);
+        }
+        function isExpiredRec(b) {
+            return !!(b && (b.expired || isExpiredBooking(b)));
+        }
+        function getActiveBookings(suite) {
+            const list = [];
+            if (suite && suite.booking && !isExpiredBooking(suite.booking)) list.push(suite.booking);
+            ((suite && suite.pending) || []).forEach(p => {
+                if (!isExpiredBooking(p) && !list.some(x => x.code === p.code)) list.push(p);
+            });
+            return list;
+        }
+        // État réel d'une suite à l'instant présent (calculé à partir des échéances)
+        function suiteState(suite) {
+            const list = getActiveBookings(suite);
+            if (list.some(b => b.isPaid)) return "reserve";
+            return list.length ? "attente" : "libre";
+        }
+        // Nettoyage dans une transaction : retire les séjours échus et recalcule l'état
+        function cleanSuite(cur) {
+            normSuite(cur);
+            cur.pending = cur.pending.filter(p => !isExpiredBooking(p));
+            if (isExpiredBooking(cur.booking)) cur.booking = null;
+            if (cur.booking && cur.booking.isPaid) {
+                cur.status = "reserve"; cur.validated = true;
+            } else if (cur.pending.length) {
+                cur.status = "attente"; cur.validated = false; cur.booking = cur.pending[0];
+            } else {
+                cur.status = "libre"; cur.validated = false; cur.booking = null;
+            }
+            return cur;
+        }
+        function normSuite(cur) {
+            cur.pending = cur.pending || [];
+            if (cur.status === "attente" && cur.booking && !cur.booking.isPaid && !cur.pending.some(p => p.code === cur.booking.code)) {
+                cur.pending.unshift(cur.booking);
+            }
+            return cur;
+        }
+        function findActiveBooking(code) {
+            for (const s of suites) {
+                const b = getActiveBookings(s).find(x => x.code === code);
+                if (b) return { suite: s, booking: b };
+            }
+            return null;
+        }
+        function findMyActivePass(suiteId) {
+            const mine = getMyPasses();
+            const s = suites.find(x => x.id === suiteId);
+            if (!s) return null;
+            return getActiveBookings(s).find(b => mine.includes(b.code)) || null;
+        }
+        function openMyPass(suiteId) {
+            const b = findMyActivePass(suiteId);
+            if (b) openPassModal(b, !!b.isPaid);
+        }
+
+        // =========================================================================
+        // RÉINITIALISATION DU SYSTÈME (réservé à la console Secrétariat, pour les tests)
+        // =========================================================================
+        function openResetConfirm() {
+            document.getElementById("reset-confirm-input").value = "";
+            document.getElementById("reset-confirm-box").classList.remove("hidden");
+        }
+        function cancelReset() {
+            document.getElementById("reset-confirm-box").classList.add("hidden");
+            document.getElementById("reset-confirm-input").value = "";
+        }
+        function performSystemReset() {
+            const v = document.getElementById("reset-confirm-input").value.trim().toUpperCase();
+            if (v !== "REINITIALISER") {
+                showToast("Tapez REINITIALISER pour confirmer.");
+                return;
+            }
+            try { localStorage.removeItem(MY_PASSES_KEY); } catch (e) {}
+            if (isFirebaseConnected && db) {
+                Promise.all([
+                    db.ref("suites").set(getDefaultSuites()),
+                    db.ref("history").remove()
+                ]).then(() => {
+                    cancelReset();
+                    showToast("Système réinitialisé : toutes les suites sont disponibles.");
+                }).catch((err) => {
+                    console.error("Échec réinitialisation:", err);
+                    setSyncStatus("denied");
+                    showToast("Échec de la réinitialisation (règles Firebase).");
+                });
+            } else {
+                suites = getDefaultSuites();
+                historyRecords = [];
+                try {
+                    localStorage.setItem(LOCAL_SUITES_KEY, JSON.stringify(suites));
+                    localStorage.setItem(LOCAL_HISTORY_KEY, "[]");
+                } catch (e) {}
+                renderAll();
+                cancelReset();
+                showToast("Système réinitialisé : toutes les suites sont disponibles.");
+            }
+        }
+
+        // Sauvegarde dans le registre permanent (history) pour l'Espace Propriétaire
+        function upsertHistoryRecord(bookingData) {
+            if (!bookingData || !bookingData.code) return;
+            if (isFirebaseConnected && db) {
+                db.ref(`history/${bookingData.code}`).set(bookingData);
+            } else {
+                const idx = historyRecords.findIndex(r => r.code === bookingData.code);
+                if (idx >= 0) {
+                    historyRecords[idx] = bookingData;
+                } else {
+                    historyRecords.unshift(bookingData);
+                }
+                localStorage.setItem(LOCAL_HISTORY_KEY, JSON.stringify(historyRecords));
+                renderOwnerDashboard();
+            }
+        }
+
+        // =========================================================================
+        // LIBÉRATION AUTOMATIQUE À L'ÉCHÉANCE (AVEC ARCHIVAGE PERMANENT)
+        // =========================================================================
+        function checkExpirationsAutomatic() {
+            const now = new Date().getTime();
+
+            suites.forEach((suite) => {
+                const expiredList = [];
+                if (suite.booking && suite.booking.expiryTimestamp && now >= suite.booking.expiryTimestamp) {
+                    expiredList.push(suite.booking);
+                }
+                (suite.pending || []).forEach(p => {
+                    if (p.expiryTimestamp && now >= p.expiryTimestamp && !expiredList.some(e => e.code === p.code)) {
+                        expiredList.push(p);
+                    }
+                });
+                if (!expiredList.length) return;
+
+                const codes = expiredList.map(b => b.code);
+                // 1. Marquer les dossiers comme expirés dans l'historique permanent (sans les supprimer)
+                expiredList.forEach(b => upsertHistoryRecord({ ...b, expired: true, expiredAt: new Date().toISOString() }));
+
+                // 2. Libérer atomiquement la suite via transaction
+                updateSingleSuiteTransaction(suite.id, (currentSuite) => {
+                    if (!currentSuite) return;
+                    cleanSuite(currentSuite);
+                    return currentSuite;
+                });
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toast-message").textContent = msg;
+            toast.classList.remove("hidden");
+            toast.classList.add("flex");
+            setTimeout(() => {
+                toast.classList.add("hidden");
+                toast.classList.remove("flex");
+            }, 3200);
+        }
+
+        function renderAll() {
+            checkExpirationsAutomatic();
+            renderRoomsGrid();
+            renderAdminTable();
+            renderOwnerDashboard();
+            updateAvailabilityCounter();
+        }
+
+        function updateAvailabilityCounter() {
+            // Les suites 'libre' ou 'attente' sont disponibles à la réservation
+            const freeCount = suites.filter(s => suiteState(s) === "libre" || suiteState(s) === "attente").length;
+            const badge = document.getElementById("hero-available-count");
+            if (badge) {
+                badge.textContent = `${freeCount} / 11 Libres`;
+            }
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            ["all", "libre", "reserve"].forEach(f => {
+                const btn = document.getElementById(`filter-${f}`);
+                if (f === filter) {
+                    btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gold text-obsidian transition-all";
+                } else {
+                    btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-all";
+                }
+            });
+            renderRoomsGrid();
+        }
+
+        function renderRoomsGrid() {
+            const container = document.getElementById("rooms-container");
+            if (!container) return;
+            container.innerHTML = "";
+            const filtered = suites.filter(s => {
+                if (currentFilter === "libre") return suiteState(s) === "libre" || suiteState(s) === "attente";
+                if (currentFilter === "reserve") return suiteState(s) === "reserve";
+                return true;
+            });
+
+            filtered.forEach(suite => {
+                const isReserved = suiteState(suite) === "reserve";
+                const isPending = suiteState(suite) === "attente";
+
+                const card = document.createElement("div");
+                card.className = `rounded-2xl p-5 border transition-all duration-300 flex flex-col justify-between ${
+                    isReserved 
+                        ? "bg-obsidian/90 border-white/5 opacity-80" 
+                        : isPending
+                        ? "bg-amber-950/20 border-amber-500/40 shadow-lg"
+                        : "bg-charcoal border-white/10 hover:border-gold/60 hover:-translate-y-1 shadow-lg"
+                }`;
+
+                let badgeHtml = "";
+                if (isReserved) {
+                    badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide bg-red-500/15 text-red-400 border border-red-500/30">Réservée</span>`;
+                } else if (isPending) {
+                    badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide bg-amber-500/15 text-amber-300 border border-amber-500/30">En attente dépôt</span>`;
+                } else {
+                    badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wide bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Disponible</span>`;
+                }
+
+                // RÈGLE MÉTIER CONSERVÉE : Une suite en attente reste réservable par un client prêt à payer
+                let buttonHtml = "";
+                if (isReserved) {
+                    buttonHtml = `<button disabled class="w-full py-3 px-4 rounded-xl bg-white/5 text-gray-500 font-semibold text-sm cursor-not-allowed flex items-center justify-center gap-2"><i class="fa-solid fa-lock text-xs"></i><span>Occupée (Synchro Live)</span></button>`;
+                } else if (isPending && findMyActivePass(suite.id)) {
+                    buttonHtml = `<button onclick="openMyPass(${suite.id})" class="w-full py-3 px-4 rounded-xl bg-amber-500/10 border border-amber-500/40 text-amber-300 font-semibold text-sm transition-all flex items-center justify-center gap-2"><i class="fa-solid fa-ticket text-xs"></i><span>Pass déjà émis • Voir mon pass</span></button>`;
+                } else if (isPending) {
+                    buttonHtml = `<button onclick="openBookingModal(${suite.id})" class="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-obsidian font-bold text-sm transition-all flex items-center justify-center gap-2"><span>En attente (Réserver)</span><i class="fa-solid fa-arrow-right text-xs"></i></button>`;
+                } else {
+                    buttonHtml = `<button onclick="openBookingModal(${suite.id})" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-obsidian font-bold text-sm transition-all flex items-center justify-center gap-2"><span>Réserver ${suite.name}</span><i class="fa-solid fa-arrow-right text-xs"></i></button>`;
+                }
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-start justify-between gap-2 mb-4">
+                            <div>
+                                <span class="text-[11px] uppercase tracking-widest text-gray-500 block">${suite.level}</span>
+                                <h3 class="font-serif text-xl font-bold text-white mt-0.5">${suite.name}</h3>
+                            </div>
+                            ${badgeHtml}
+                        </div>
+                        <div class="space-y-2 text-xs text-gray-400 mb-5 border-t border-white/5 pt-3.5">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-bolt text-gold w-4 text-center"></i>
+                                <span>${syncMode === "live" ? "Synchronisation en direct" : "Mode local (non synchronisé)"}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-tag text-gold w-4 text-center"></i>
+                                <span>15 000 FCFA / 24h • Sieste 8 000</span>
+                            </div>
+                        </div>
+                    </div>
+                    ${buttonHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openBookingModal(suiteId) {
+            activeRoomId = suiteId;
+            const suite = suites.find(s => s.id === suiteId);
+            if (!suite || suiteState(suite) === "reserve") return;
+            if (findMyActivePass(suiteId)) { openMyPass(suiteId); return; }
+            document.getElementById("modal-suite-title").textContent = `Réserver ${suite.name}`;
+            document.getElementById("booking-form").reset();
+            document.getElementById("input-days").value = 1;
+            
+            const now = new Date();
+            now.setHours(now.getHours() + 1);
+            now.setMinutes(0);
+            const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            document.getElementById("input-arrival").value = localISO;
+            updatePricing();
+
+            const modal = document.getElementById("booking-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeBookingModal() {
+            document.getElementById("booking-modal").classList.add("hidden");
+            document.getElementById("booking-modal").classList.remove("flex");
+        }
+
+        function updatePricing() {
+            const formule = document.querySelector('input[name="formule"]:checked').value;
+            const daysWrapper = document.getElementById("days-field-wrapper");
+            const daysInput = document.getElementById("input-days");
+            const discountRow = document.getElementById("calc-discount-row");
+            let baseAmount = 0;
+            let discountAmount = 0;
+            let totalAmount = 0;
+
+            if (formule === "sieste") {
+                daysWrapper.classList.add("opacity-40", "pointer-events-none");
+                daysInput.required = false;
+                baseAmount = 8000;
+                totalAmount = 8000;
+                discountRow.classList.add("hidden");
+                document.getElementById("calc-base").textContent = "8 000 FCFA (Forfait Sieste)";
+            } else {
+                daysWrapper.classList.remove("opacity-40", "pointer-events-none");
+                daysInput.required = true;
+                const days = Math.max(1, parseInt(daysInput.value) || 1);
+                baseAmount = days * 15000;
+                document.getElementById("calc-base").textContent = `${days} jour(s) × 15 000 FCFA`;
+
+                if (days >= 15) {
+                    discountAmount = Math.round(baseAmount * 0.20);
+                    totalAmount = baseAmount - discountAmount;
+                    discountRow.classList.remove("hidden");
+                    document.getElementById("calc-discount").textContent = `- ${discountAmount.toLocaleString("fr-FR")} FCFA`;
+                } else {
+                    totalAmount = baseAmount;
+                    discountRow.classList.add("hidden");
+                }
+            }
+            document.getElementById("calc-total").textContent = `${totalAmount.toLocaleString("fr-FR")} FCFA`;
+            return { formule, days: parseInt(daysInput.value) || 1, baseAmount, discountAmount, totalAmount };
+        }
+
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+            const suite = suites.find(s => s.id === activeRoomId);
+            if (!suite) return;
+
+            if (suiteState(suite) === "reserve") {
+                showToast("Désolé, cette suite vient d'être validée pour un autre client.");
+                closeBookingModal();
+                return;
+            }
+            if (findMyActivePass(suite.id)) {
+                showToast("Vous avez déjà un pass pour cette suite.");
+                closeBookingModal();
+                openMyPass(suite.id);
+                return;
+            }
+
+            const pricing = updatePricing();
+            const clientName = document.getElementById("input-name").value.trim();
+            const clientPhone = document.getElementById("input-phone").value.trim();
+            const clientCni = document.getElementById("input-cni").value.trim().toUpperCase();
+            const arrivalRaw = document.getElementById("input-arrival").value;
+            
+            const arrivalDate = arrivalRaw ? new Date(arrivalRaw) : new Date();
+            const arrivalFormatted = arrivalDate.toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" });
+            
+            let expiryTime = new Date(arrivalDate.getTime());
+            if (pricing.formule === "sieste") {
+                expiryTime.setHours(expiryTime.getHours() + 6);
+            } else {
+                expiryTime.setDate(expiryTime.getDate() + pricing.days);
+            }
+            const expiryFormatted = expiryTime.toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" });
+
+            const randomSuffix = Math.floor(100 + Math.random() * 900);
+            const accessCode = `CV-YDE-${suite.id}-${randomSuffix}`;
+            const stayLabel = pricing.formule === "sieste" ? "Sieste (Créneau 6h)" : `${pricing.days} jour(s) — Tranche 24h${pricing.days >= 15 ? " (-20% inclus)" : ""}`;
+
+            const bookingData = {
+                code: accessCode,
+                suiteId: suite.id,
+                suiteName: suite.name,
+                clientName,
+                clientPhone,
+                clientCni,
+                formule: pricing.formule,
+                days: pricing.days,
+                stayLabel,
+                arrivalFormatted,
+                expiryFormatted,
+                expiryTimestamp: expiryTime.getTime(),
+                totalAmount: pricing.totalAmount,
+                totalFormatted: `${pricing.totalAmount.toLocaleString("fr-FR")} FCFA`,
+                paymentOperator: null,
+                senderPhone: null,
+                isPaid: false,
+                expired: false,
+                createdAt: new Date().toISOString()
+            };
+
+            // Transaction atomique sur la suite + archivage permanent
+            updateSingleSuiteTransaction(suite.id, (currentSuite) => {
+                cleanSuite(currentSuite);
+                if (currentSuite.status === "reserve") {
+                    return; // Annule la transaction si déjà payée entre temps
+                }
+                currentSuite.pending.push(bookingData); // les autres réservations en attente sont conservées
+                currentSuite.status = "attente";
+                currentSuite.validated = false;
+                currentSuite.booking = currentSuite.pending[0];
+                return currentSuite;
+            }, () => {
+                addMyPass(bookingData.code);
+                upsertHistoryRecord(bookingData);
+                closeBookingModal();
+                openPassModal(bookingData, false);
+            });
+        }
+
+        function buildWhatsAppUrl(booking) {
+            const text = [
+                `*RÉSERVATION EN LIGNE — IMMEUBLE CHRIS-VAN*`,
+                `📍 *Yaoundé Olembé (Proximité Pharmacie)*`,
+                `------------------------------------`,
+                `🏨 *Suite :* ${booking.suiteName}`,
+                `🔑 *Code Pass Unique :* ${booking.code}`,
+                `👤 *Client :* ${booking.clientName}`,
+                `📞 *WhatsApp :* ${booking.clientPhone}`,
+                `🪪 *CNI/Passeport :* ${booking.clientCni}`,
+                `📅 *Formule :* ${booking.stayLabel}`,
+                `🕒 *Arrivée :* ${booking.arrivalFormatted}`,
+                `⏳ *Échéance (Fin) :* ${booking.expiryFormatted}`,
+                `💰 *Montant :* ${booking.totalFormatted}`,
+                `------------------------------------`,
+                `Bonjour, voici mon Pass de réservation. Merci de valider mon paiement pour recevoir ma carte magnétique.`
+            ].join("\n");
+            return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+        }
+
+        function openPassModal(booking, isValidated) {
+            document.getElementById("pass-suite").textContent = booking.suiteName;
+            document.getElementById("pass-code").textContent = booking.code;
+            document.getElementById("pass-client").textContent = booking.clientName;
+            document.getElementById("pass-cni").textContent = booking.clientCni;
+            document.getElementById("pass-stay").textContent = booking.stayLabel;
+            document.getElementById("pass-expiry").textContent = booking.expiryFormatted;
+            document.getElementById("pass-amount").textContent = booking.totalFormatted;
+
+            const badge = document.getElementById("pass-status-badge");
+            const mainTitle = document.getElementById("pass-main-title");
+            const subtitleInfo = document.getElementById("pass-subtitle-info");
+            const iconContainer = document.getElementById("pass-icon-container");
+            const actionsContainer = document.getElementById("pass-actions-container");
+
+            if (isValidated) {
+                badge.className = "px-2.5 py-1 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-semibold";
+                badge.textContent = "Validé • Actif";
+                mainTitle.textContent = "Pass de Réservation Validé";
+                subtitleInfo.innerHTML = `Paiement réglé via <strong class="text-white">${booking.paymentOperator}</strong>.`;
+                iconContainer.className = "w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto mb-3 text-xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-check"></i>';
+                actionsContainer.innerHTML = `<button type="button" onclick="closePassModal()" class="w-full py-3.5 px-4 rounded-xl bg-gold hover:bg-gold-light text-obsidian font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2"><i class="fa-solid fa-circle-check"></i><span>Fermer (Bon séjour)</span></button>`;
+            } else {
+                badge.className = "px-2.5 py-1 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-semibold";
+                badge.textContent = "En attente dépôt";
+                mainTitle.textContent = "Pass de Réservation Émis";
+                subtitleInfo.textContent = "Envoyez cette fiche sur WhatsApp à la réception pour régler votre séjour.";
+                iconContainer.className = "w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center mx-auto mb-3 text-xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-hourglass-half"></i>';
+                actionsContainer.innerHTML = `
+                    <button type="button" onclick="closePassModal()" class="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-gray-300 hover:text-white text-xs sm:text-sm font-semibold transition-colors flex items-center justify-center gap-2 shrink-0">
+                        <i class="fa-solid fa-arrow-left text-xs"></i><span>Retour</span>
+                    </button>
+                    <a id="pass-whatsapp-link" href="${buildWhatsAppUrl(booking)}" target="_blank" class="flex-1 py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all">
+                        <i class="fa-brands fa-whatsapp text-lg"></i><span>Envoyer sur WhatsApp</span>
+                    </a>
+                `;
+            }
+
+            const modal = document.getElementById("pass-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closePassModal() {
+            document.getElementById("pass-modal").classList.add("hidden");
+            document.getElementById("pass-modal").classList.remove("flex");
+        }
+
+        function copyPassCode() {
+            const codeText = document.getElementById("pass-code").textContent;
+            const tempInput = document.createElement("input");
+            tempInput.value = codeText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            showToast(`Code unique ${codeText} copié !`);
+        }
+
+        function openLookupModal() {
+            document.getElementById("lookup-query").value = "";
+            document.getElementById("lookup-result").innerHTML = "";
+            const modal = document.getElementById("lookup-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeLookupModal() {
+            document.getElementById("lookup-modal").classList.add("hidden");
+            document.getElementById("lookup-modal").classList.remove("flex");
+        }
+
+        function performClientLookup() {
+            const q = document.getElementById("lookup-query").value.trim().toUpperCase();
+            const resDiv = document.getElementById("lookup-result");
+            if (!q) return;
+
+            let found = null;
+            for (const s of suites) {
+                const list = getActiveBookings(s);
+                const m = list.find(b => b.code === q) || list.find(b => b.clientCni === q);
+                if (m) { found = m; break; }
+            }
+            if (found) {
+                closeLookupModal();
+                openPassModal(found, !!found.isPaid);
+            } else {
+                const voided = historyRecords.find(r => r.voided && !r.isPaid && (r.code === q || r.clientCni === q));
+                if (voided) {
+                    resDiv.innerHTML = `<div class="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs">Cette suite a été attribuée à un autre client dont le paiement a été validé en premier. Vous pouvez choisir une autre suite.</div>`;
+                } else {
+                    resDiv.innerHTML = `<div class="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs">Aucune réservation active trouvée pour "${q}".</div>`;
+                }
+            }
+        }
+
+        function openManualIntakeModal() {
+            const select = document.getElementById("intake-suite-id");
+            select.innerHTML = "";
+            // Permet de sélectionner les suites libres ou en attente
+            suites.filter(s => suiteState(s) !== "reserve").forEach(s => {
+                const opt = document.createElement("option");
+                opt.value = s.id;
+                opt.textContent = `${s.name} (${s.level})${suiteState(s) === 'attente' ? ' — En attente' : ''}`;
+                select.appendChild(opt);
+            });
+            if (select.options.length === 0) {
+                showToast("Toutes les suites sont actuellement occupées et payées !");
+                return;
+            }
+            document.getElementById("intake-days").value = 1;
+            updateIntakePricing();
+            const modal = document.getElementById("manual-intake-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeManualIntakeModal() {
+            document.getElementById("manual-intake-modal").classList.add("hidden");
+            document.getElementById("manual-intake-modal").classList.remove("flex");
+        }
+
+        function updateIntakePricing() {
+            const formule = document.getElementById("intake-formule").value;
+            const days = parseInt(document.getElementById("intake-days").value) || 1;
+            let total = formule === "sieste" ? 8000 : days * 15000;
+            if (formule === "nuitee" && days >= 15) {
+                total = Math.round(total * 0.80);
+            }
+            document.getElementById("intake-total-preview").textContent = `${total.toLocaleString("fr-FR")} FCFA`;
+        }
+
+        function handleManualIntakeSubmit(event) {
+            event.preventDefault();
+            const suiteId = parseInt(document.getElementById("intake-suite-id").value);
+            const suite = suites.find(s => s.id === suiteId);
+            if (!suite) return;
+
+            const clientName = document.getElementById("intake-name").value.trim();
+            const clientPhone = document.getElementById("intake-phone").value.trim();
+            const clientCni = document.getElementById("intake-cni").value.trim().toUpperCase();
+            const formule = document.getElementById("intake-formule").value;
+            const days = parseInt(document.getElementById("intake-days").value) || 1;
+            
+            let totalAmount = formule === "sieste" ? 8000 : days * 15000;
+            if (formule === "nuitee" && days >= 15) {
+                totalAmount = Math.round(totalAmount * 0.80);
+            }
+
+            const arrivalDate = new Date();
+            let expiryTime = new Date(arrivalDate.getTime());
+            if (formule === "sieste") {
+                expiryTime.setHours(expiryTime.getHours() + 6);
+            } else {
+                expiryTime.setDate(expiryTime.getDate() + days);
+            }
+
+            const randomSuffix = Math.floor(100 + Math.random() * 900);
+            const accessCode = `CV-YDE-${suite.id}-${randomSuffix}`;
+            const stayLabel = formule === "sieste" ? "Sieste (Créneau 6h)" : `${days} jour(s) — Tranche 24h${days >= 15 ? " (-20% inclus)" : ""}`;
+
+            const bookingData = {
+                code: accessCode,
+                suiteId: suite.id,
+                suiteName: suite.name,
+                clientName,
+                clientPhone,
+                clientCni,
+                formule,
+                days,
+                stayLabel,
+                arrivalFormatted: arrivalDate.toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" }),
+                expiryFormatted: expiryTime.toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" }),
+                expiryTimestamp: expiryTime.getTime(),
+                totalAmount,
+                totalFormatted: `${totalAmount.toLocaleString("fr-FR")} FCFA`,
+                paymentOperator: null,
+                senderPhone: null,
+                isPaid: false,
+                expired: false,
+                createdAt: new Date().toISOString()
+            };
+
+            updateSingleSuiteTransaction(suite.id, (currentSuite) => {
+                cleanSuite(currentSuite);
+                if (currentSuite.status === "reserve") return;
+                currentSuite.pending.push(bookingData);
+                currentSuite.status = "attente";
+                currentSuite.validated = false;
+                currentSuite.booking = currentSuite.pending[0];
+                return currentSuite;
+            }, () => {
+                upsertHistoryRecord(bookingData);
+                closeManualIntakeModal();
+                showToast(`Réservation enregistrée. Code unique : ${accessCode}`);
+            });
+        }
+
+        let validatingCode = null;
+        function openValidatePaymentModal(suiteId, code) {
+            const suite = suites.find(s => s.id === suiteId);
+            if (!suite) return;
+            const b = getActiveBookings(suite).find(x => x.code === code) || suite.booking;
+            if (!b) return;
+
+            if (b.isPaid) {
+                showToast("Erreur : Ce code unique a déjà été validé !");
+                return;
+            }
+            if (suiteState(suite) === "reserve") {
+                showToast("Cette suite a déjà été attribuée à un autre client.");
+                return;
+            }
+
+            validatingCode = b.code;
+            document.getElementById("validate-suite-id").value = suite.id;
+            document.getElementById("validate-client-name").textContent = b.clientName;
+            document.getElementById("validate-code-text").textContent = b.code;
+            document.getElementById("validate-amount").textContent = b.totalFormatted;
+            document.getElementById("validate-sender-phone").value = b.clientPhone;
+            document.getElementById("validate-modal-subtitle").textContent = `Validation pour ${suite.name} (Code : ${b.code})`;
+
+            const modal = document.getElementById("validate-payment-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeValidatePaymentModal() {
+            document.getElementById("validate-payment-modal").classList.add("hidden");
+            document.getElementById("validate-payment-modal").classList.remove("flex");
+        }
+
+        function handleValidatePaymentSubmit(event) {
+            event.preventDefault();
+            const suiteId = parseInt(document.getElementById("validate-suite-id").value);
+            const suite = suites.find(s => s.id === suiteId);
+            if (!suite || !validatingCode) return;
+            if (suiteState(suite) === "reserve") {
+                showToast("Cette suite a déjà été attribuée à un autre client.");
+                closeValidatePaymentModal();
+                return;
+            }
+
+            const code = validatingCode;
+            const operator = document.querySelector('input[name="operator"]:checked').value;
+            const senderPhone = document.getElementById("validate-sender-phone").value.trim();
+            let validatedBooking = null;
+            let voidedList = [];
+
+            updateSingleSuiteTransaction(suite.id, (currentSuite) => {
+                if (!currentSuite) return;
+                cleanSuite(currentSuite);
+                if (currentSuite.status === "reserve") return; // Déjà attribuée : première validation gagnante
+                const target = currentSuite.pending.find(p => p.code === code);
+                if (!target || target.isPaid) return; // Protection anti-double validation
+
+                validatedBooking = { ...target, paymentOperator: operator, senderPhone: senderPhone, isPaid: true, paidAt: new Date().toISOString() };
+                voidedList = currentSuite.pending.filter(p => p.code !== code);
+                currentSuite.booking = validatedBooking;
+                currentSuite.pending = [];
+                currentSuite.status = "reserve";
+                currentSuite.validated = true;
+                return currentSuite;
+            }, () => {
+                if (validatedBooking) upsertHistoryRecord(validatedBooking);
+                // Les autres réservations non payées de cette suite sont annulées (suite attribuée)
+                voidedList.forEach(v => upsertHistoryRecord({ ...v, voided: true, voidedAt: new Date().toISOString() }));
+                closeValidatePaymentModal();
+                showToast(`Paiement (${operator}) validé ! Échéance auto activée.`);
+            });
+        }
+
+        function verifyCodeInAdmin() {
+            const code = document.getElementById("admin-verify-input").value.trim().toUpperCase();
+            const resBox = document.getElementById("admin-verify-result");
+            if (!code) return;
+            resBox.classList.remove("hidden");
+
+            const foundActive = findActiveBooking(code);
+            const suite = foundActive ? foundActive.suite : null;
+            if (!suite) {
+                // Vérifier dans l'historique si le séjour est déjà expiré
+                const hist = historyRecords.find(h => h.code === code);
+                if (hist) {
+                    resBox.innerHTML = `<div class="p-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Le code <strong>${code}</strong> (${hist.clientName}) correspond à un séjour <strong>expiré</strong> le ${hist.expiryFormatted}.</div>`;
+                } else {
+                    resBox.innerHTML = `<div class="p-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300"><i class="fa-solid fa-circle-xmark mr-1.5"></i> Code <strong>${code}</strong> introuvable.</div>`;
+                }
+                return;
+            }
+            const b = foundActive.booking;
+            resBox.innerHTML = `
+                <div class="p-4 rounded-xl bg-obsidian border border-gold/30 text-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="text-gold font-bold"><i class="fa-solid fa-ticket mr-1.5"></i> Code Trouvé — ${suite.name}</div>
+                        <div class="text-xs text-gray-300 mt-1">Client : <strong>${b.clientName}</strong> | Fin de séjour : <strong class="text-amber-400">${b.expiryFormatted}</strong></div>
+                        <div class="text-xs text-gray-400 mt-0.5">État : ${b.isPaid ? `<span class="text-emerald-400 font-semibold">Payé (${b.paymentOperator})</span>` : '<span class="text-amber-400 font-semibold">Non payé (En attente)</span>'}</div>
+                    </div>
+                    ${!b.isPaid ? `
+                        <button onclick="openValidatePaymentModal(${suite.id}, '${b.code}')" class="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shrink-0">
+                            Préciser Paiement & Valider
+                        </button>
+                    ` : `<span class="px-3 py-1 rounded-lg bg-blue-500/20 text-blue-300 text-xs font-semibold shrink-0">Déjà Consommé</span>`}
+                </div>
+            `;
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById("admin-table-body");
+            if (!tbody) return;
+            tbody.innerHTML = "";
+            suites.forEach(suite => {
+              const isFree = suiteState(suite) === "libre";
+              const activeList = getActiveBookings(suite);
+              const rowsList = (isFree || !activeList.length) ? [null] : activeList;
+              rowsList.forEach(b => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-white/[0.02] transition-colors";
+
+                let statusBadgeHtml = "";
+                if (isFree) {
+                    statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/15 text-red-400 border border-red-500/30">Non actif</span>`;
+                } else if (suite.validated && b && b.isPaid) {
+                    statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Actif (Auto)</span>`;
+                } else {
+                    statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/15 text-amber-300 border border-amber-500/30">En attente</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="py-3.5 px-4 font-serif font-bold text-white whitespace-nowrap">${suite.name}</td>
+                    <td class="py-3.5 px-4 whitespace-nowrap">${isFree ? `<span class="text-gray-400 text-xs">Disponible</span>` : `<span class="text-gold text-xs">Occupée</span>`}</td>
+                    <td class="py-3.5 px-4 font-mono text-xs text-gold whitespace-nowrap">${b ? b.code : "—"}</td>
+                    <td class="py-3.5 px-4">${b ? `<div class="text-white font-medium text-xs">${b.clientName}</div><div class="text-gray-400 text-[11px]">CNI: ${b.clientCni} • ${b.clientPhone}</div>` : `<span class="text-gray-500 text-xs">Aucun occupant</span>`}</td>
+                    <td class="py-3.5 px-4 whitespace-nowrap">${b ? `<div class="text-amber-400 font-semibold text-xs">${b.expiryFormatted}</div><div class="text-gray-400 text-[11px]">${b.stayLabel}</div>` : `<span class="text-gray-500 text-xs">—</span>`}</td>
+                    <td class="py-3.5 px-4 whitespace-nowrap">${b && b.paymentOperator ? `<div class="text-white font-semibold text-xs">${b.paymentOperator}</div><div class="text-gray-400 text-[11px]">Réf: ${b.senderPhone}</div>` : `<span class="text-amber-400 text-xs italic">Non réglé</span>`}</td>
+                    <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                        <div class="inline-flex items-center gap-2">
+                            ${statusBadgeHtml}
+                            ${!isFree && b && !b.isPaid ? `<button onclick="openValidatePaymentModal(${suite.id}, '${b.code}')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-colors ml-2">Valider Paiement</button>` : ""}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+              });
+            });
+        }
+
+        // Archives visibles aussi dans la console Secrétariat (lecture seule, même registre que la Patronne)
+        function renderAdminArchive() {
+            const tbody = document.getElementById("admin-archive-body");
+            if (!tbody) return;
+            const rows = historyRecords.filter(b => isExpiredRec(b) || b.voided);
+            if (!rows.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-5 text-center text-gray-500 italic">Aucune archive pour le moment.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = rows.map(b => {
+                let badge;
+                if (b.voided && !b.isPaid) badge = `<span class="px-2.5 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/30 font-semibold">Annulé • Suite attribuée</span>`;
+                else if (b.isPaid) badge = `<span class="px-2.5 py-1 rounded-full bg-slate-500/20 text-gray-300 border border-white/15 font-semibold">Terminé • Archivé</span>`;
+                else badge = `<span class="px-2.5 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/30 font-semibold">Expiré (Non payé)</span>`;
+                return `<tr class="hover:bg-white/[0.02] transition-colors">
+                    <td class="py-3 px-4 text-gray-400 whitespace-nowrap">${new Date(b.createdAt).toLocaleString("fr-FR")}</td>
+                    <td class="py-3 px-4 font-serif font-bold text-white whitespace-nowrap">${b.suiteName}</td>
+                    <td class="py-3 px-4 font-mono text-gold whitespace-nowrap">${b.code}</td>
+                    <td class="py-3 px-4"><div class="text-white font-medium">${b.clientName}</div><div class="text-gray-400 text-[11px]">CNI: ${b.clientCni} • ${b.clientPhone}</div></td>
+                    <td class="py-3 px-4 whitespace-nowrap"><div class="text-amber-400 font-semibold">${b.expiryFormatted}</div><div class="text-gray-400 text-[11px]">${b.stayLabel}</div></td>
+                    <td class="py-3 px-4 text-right whitespace-nowrap">${badge}</td>
+                </tr>`;
+            }).join("");
+        }
+
+        // Tableau de bord Propriétaire alimenté par le registre permanent (historyRecords)
+        function renderOwnerDashboard() {
+            renderAdminArchive();
+            const tbody = document.getElementById("owner-table-body");
+            if (!tbody) return;
+            tbody.innerHTML = "";
+
+            // Fusionner les archives permanentes avec les éventuelles réservations actives non encore indexées
+            const recordsMap = new Map();
+            historyRecords.forEach(rec => recordsMap.set(rec.code, rec));
+            suites.forEach(s => {
+                getActiveBookings(s).forEach(bk => {
+                    if (!recordsMap.has(bk.code)) recordsMap.set(bk.code, bk);
+                });
+            });
+
+            const allRecords = Array.from(recordsMap.values()).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            let totalBookings = allRecords.length;
+            let validatedCount = 0;
+            let pendingCount = 0;
+            let totalRevenue = 0;
+            let countEspeces = 0;
+            let countMobile = 0;
+
+            allRecords.forEach(b => {
+                if (b.isPaid) {
+                    validatedCount++;
+                    totalRevenue += b.totalAmount || 0;
+                    if (b.paymentOperator === "Espèces (Guichet)") countEspeces++;
+                    else countMobile++;
+                } else if (!b.voided) {
+                    pendingCount++;
+                }
+
+                let stateBadge = "";
+                if (b.voided && !b.isPaid) {
+                    stateBadge = `<span class="px-2.5 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/30 font-semibold">Annulé • Suite attribuée</span>`;
+                } else if (isExpiredRec(b)) {
+                    stateBadge = b.isPaid
+                        ? `<span class="px-2.5 py-1 rounded-full bg-slate-500/20 text-gray-300 border border-white/15 font-semibold">Terminé • Archivé</span>`
+                        : `<span class="px-2.5 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/30 font-semibold">Expiré (Non payé)</span>`;
+                } else if (b.isPaid) {
+                    stateBadge = `<span class="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold">Actif / En cours</span>`;
+                } else {
+                    stateBadge = `<span class="px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 font-semibold">Non décaissé</span>`;
+                }
+
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-white/[0.02] transition-colors text-xs";
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-gray-400 whitespace-nowrap">${new Date(b.createdAt).toLocaleString("fr-FR")}</td>
+                    <td class="py-3 px-4 font-serif font-bold text-white whitespace-nowrap">${b.suiteName}</td>
+                    <td class="py-3 px-4 font-mono text-gold whitespace-nowrap">${b.code}</td>
+                    <td class="py-3 px-4"><div class="text-white font-medium">${b.clientName}</div><div class="text-gray-400 text-[11px]">WhatsApp: ${b.clientPhone} | CNI: ${b.clientCni}</div></td>
+                    <td class="py-3 px-4 whitespace-nowrap"><div class="text-amber-400 font-bold">${b.expiryFormatted}</div><div class="text-gray-400 text-[11px]">${b.stayLabel}</div></td>
+                    <td class="py-3 px-4 whitespace-nowrap">${b.paymentOperator ? `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">${b.paymentOperator}</span><div class="text-gray-300 text-[11px] mt-0.5">Montant: ${b.totalFormatted}</div>` : `<span class="text-amber-400 italic">En attente (${b.totalFormatted})</span>`}</td>
+                    <td class="py-3 px-4 text-right whitespace-nowrap">${stateBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (totalBookings === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="py-6 text-center text-gray-500 italic">Aucune donnée archivée pour le moment.</td></tr>`;
+            }
+
+            document.getElementById("owner-total-revenue").textContent = `${totalRevenue.toLocaleString("fr-FR")} FCFA`;
+            document.getElementById("owner-stat-total").textContent = totalBookings;
+            document.getElementById("owner-stat-validated").textContent = validatedCount;
+            document.getElementById("owner-stat-pending").textContent = pendingCount;
+            document.getElementById("owner-stat-modes").textContent = `Espèces: ${countEspeces} | Mobile: ${countMobile}`;
+        }
+
+        function openPinModal(targetSection) {
+            if (!currentUser || currentUser.role !== "admin") {
+                showToast("Accès réservé aux administrateurs.");
+                return;
+            }
+            document.getElementById("pin-target-section").value = targetSection;
+            document.getElementById("pin-input").value = "";
+            document.getElementById("pin-error").classList.add("hidden");
+
+            const title = document.getElementById("pin-modal-title");
+            const subtitle = document.getElementById("pin-modal-subtitle");
+            const icon = document.getElementById("pin-modal-icon");
+
+            if (targetSection === "admin") {
+                title.textContent = "Espace Propriétaire (La Patronne)";
+                subtitle.textContent = "Entrez le code PIN sécurisé (8888).";
+                icon.className = "w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto mb-3 text-lg";
+                icon.innerHTML = '<i class="fa-solid fa-crown"></i>';
+            } else {
+                title.textContent = "Accès Secrétariat";
+                subtitle.textContent = "Entrez le code PIN de la réception (2026)";
+                icon.className = "w-11 h-11 rounded-xl bg-gold/15 border border-gold/30 text-gold flex items-center justify-center mx-auto mb-3 text-lg";
+                icon.innerHTML = '<i class="fa-solid fa-shield-halved"></i>';
+            }
+
+            const modal = document.getElementById("pin-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            setTimeout(() => document.getElementById("pin-input").focus(), 100);
+        }
+
+        function closePinModal() {
+            document.getElementById("pin-modal").classList.add("hidden");
+            document.getElementById("pin-modal").classList.remove("flex");
+        }
+
+        function handlePinSubmit(event) {
+            event.preventDefault();
+            const target = document.getElementById("pin-target-section").value;
+            const val = document.getElementById("pin-input").value.trim();
+
+            if (target === "admin") {
+                if (val === OWNER_PIN) {
+                    closePinModal();
+                    const ownerSec = document.getElementById("owner-section");
+                    ownerSec.classList.remove("hidden");
+                    ownerSec.scrollIntoView({ behavior: "smooth" });
+                    showToast("Espace Propriétaire déverrouillé");
+                } else {
+                    document.getElementById("pin-error").classList.remove("hidden");
+                }
+            } else {
+                if (val === SECRETARIAT_PIN) {
+                    closePinModal();
+                    const adminSec = document.getElementById("admin-section");
+                    adminSec.classList.remove("hidden");
+                    adminSec.scrollIntoView({ behavior: "smooth" });
+                    showToast("Espace Secrétariat déverrouillé");
+                } else {
+                    document.getElementById("pin-error").classList.remove("hidden");
+                }
+            }
+        }
+
+        function closeAdminSection() {
+            document.getElementById("admin-section").classList.add("hidden");
+            showToast("Espace Secrétariat verrouillé");
+        }
+
+        function closeOwnerSection() {
+            document.getElementById("owner-section").classList.add("hidden");
+            showToast("Espace Propriétaire verrouillé");
+        }
+
+        // =========================================================================
+        // ACCÈS : ESPACE CLIENT / ESPACE ADMINISTRATEUR (inscription & connexion)
+        // Firebase Authentication (e-mail + mot de passe) quand Firebase est connecté.
+        // Sinon : comptes de démonstration enregistrés sur cet appareil uniquement.
+        // Les administrateurs sont reconnus par leur e-mail (liste ci-dessous) ;
+        // leurs comptes se créent dans la console Firebase (Authentication > Users).
+        // =========================================================================
+        // Accès administrateur : pas d'inscription, uniquement des mots de passe connus.
+        // Seule l'empreinte (SHA-256) du mot de passe est écrite ici, jamais le mot de passe lui-même.
+        // "email" = compte technique Firebase associé (invisible pour l'utilisateur, créé automatiquement).
+        const ADMIN_ACCESS = [
+            { label: "Administrateur", email: "admin@chrisvan.app", hash: "32d6a0470118eb4c3a7fbd21708fbad211377ba4c5e7c541bfab7b493687f957" }
+        ];
+        const ADMIN_EMAILS = ADMIN_ACCESS.map(a => a.email);
+        const LOCAL_USERS_KEY = "chris_van_users_v1";
+        const LOCAL_SESSION_KEY = "chris_van_session_v1";
+        let currentUser = null;      // { email, role: 'client' | 'admin' }
+        let authSpace = "client";
+        let authMode = "login";
+        let authReady = false;
+        let authBusy = false;
+
+        function hasFirebaseAuth() {
+            return isFirebaseConnected && typeof firebase !== "undefined" && typeof firebase.auth === "function";
+        }
+        function isAdminEmail(email) {
+            return ADMIN_EMAILS.map(e => e.toLowerCase()).includes(String(email || "").toLowerCase());
+        }
+        async function sha256(text) {
+            if (!(window.crypto && crypto.subtle)) return "plain:" + text;
+            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+        }
+        function readLocalUsers() {
+            try { return JSON.parse(localStorage.getItem(LOCAL_USERS_KEY)) || {}; } catch (e) { return {}; }
+        }
+        function authErrorMessage(err) {
+            const map = {
+                "auth/invalid-email": "Adresse e-mail invalide.",
+                "auth/email-already-in-use": "Un compte existe déjà avec cet e-mail. Connectez-vous.",
+                "auth/weak-password": "Mot de passe trop court (6 caractères minimum).",
+                "auth/invalid-credential": "E-mail ou mot de passe incorrect.",
+                "auth/wrong-password": "E-mail ou mot de passe incorrect.",
+                "auth/user-not-found": "E-mail ou mot de passe incorrect.",
+                "auth/too-many-requests": "Trop de tentatives. Réessayez dans quelques minutes.",
+                "auth/network-request-failed": "Pas de connexion internet.",
+                "auth/operation-not-allowed": "La connexion par e-mail n'est pas activée dans Firebase (Authentication > Méthode de connexion)."
+            };
+            return map[err && err.code] || "Connexion impossible. Réessayez.";
+        }
+        function showAuthError(msg) {
+            const el = document.getElementById("auth-error");
+            el.textContent = msg;
+            el.classList.remove("hidden");
+        }
+
+        function chooseSpace(space) {
+            authSpace = space;
+            document.getElementById("auth-choose").classList.add("hidden");
+            document.getElementById("auth-form-wrap").classList.remove("hidden");
+            const isAdmin = space === "admin";
+            document.getElementById("auth-title").textContent = isAdmin ? "Espace Administrateur" : "Espace Client";
+            const emailInput = document.getElementById("auth-email");
+            const pwInput = document.getElementById("auth-password");
+            emailInput.parentElement.classList.toggle("hidden", isAdmin);
+            emailInput.required = !isAdmin;
+            emailInput.value = "";
+            pwInput.value = "";
+            pwInput.minLength = isAdmin ? 0 : 6;
+            pwInput.placeholder = isAdmin ? "Mot de passe administrateur" : "6 caractères minimum";
+            // Administrateur : pas d'inscription ni de connexion par e-mail, un mot de passe connu suffit
+            document.getElementById("auth-tabs").classList.toggle("hidden", isAdmin);
+            const note = document.getElementById("auth-note");
+            if (isAdmin) {
+                note.textContent = "Accès réservé au personnel. Entrez le mot de passe fourni par la direction.";
+            } else if (!hasFirebaseAuth()) {
+                note.textContent = "Mode démonstration : les comptes sont enregistrés sur cet appareil uniquement.";
+            } else {
+                note.textContent = "Une seule inscription par adresse e-mail. Déjà inscrit ? Choisissez Connexion.";
+            }
+            setAuthMode("login");
+            if (isAdmin) {
+                document.getElementById("auth-submit").textContent = "Accéder";
+                document.getElementById("auth-password").autocomplete = "current-password";
+            }
+        }
+        function backToChoice() {
+            document.getElementById("auth-form-wrap").classList.add("hidden");
+            document.getElementById("auth-choose").classList.remove("hidden");
+            document.getElementById("auth-error").classList.add("hidden");
+        }
+        function setAuthMode(mode) {
+            authMode = mode;
+            const on = "flex-1 py-2 rounded-lg text-xs font-semibold bg-gold text-obsidian transition-all";
+            const off = "flex-1 py-2 rounded-lg text-xs font-medium text-gray-300 hover:text-white transition-all";
+            document.getElementById("auth-tab-login").className = mode === "login" ? on : off;
+            document.getElementById("auth-tab-register").className = mode === "register" ? on : off;
+            document.getElementById("auth-password2-wrap").classList.toggle("hidden", mode !== "register");
+            document.getElementById("auth-password").autocomplete = mode === "register" ? "new-password" : "current-password";
+            document.getElementById("auth-submit").textContent = mode === "register" ? "Créer mon compte" : "Se connecter";
+            document.getElementById("auth-error").classList.add("hidden");
+        }
+
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+            if (authBusy) return;
+            const pw = document.getElementById("auth-password").value;
+            document.getElementById("auth-error").classList.add("hidden");
+            const btn = document.getElementById("auth-submit");
+
+            // ---------- ESPACE ADMINISTRATEUR : mot de passe connu uniquement ----------
+            if (authSpace === "admin") {
+                if (!pw) return;
+                authBusy = true; btn.disabled = true;
+                try {
+                    const hash = await sha256(pw);
+                    const entry = ADMIN_ACCESS.find(a => a.hash === hash);
+                    if (!entry) { showAuthError("Mot de passe administrateur incorrect."); return; }
+                    if (hasFirebaseAuth()) {
+                        const auth = firebase.auth();
+                        try {
+                            await auth.signInWithEmailAndPassword(entry.email, pw);
+                        } catch (err) {
+                            if (["auth/user-not-found", "auth/invalid-credential", "auth/wrong-password"].includes(err.code)) {
+                                try {
+                                    await auth.createUserWithEmailAndPassword(entry.email, pw); // première activation
+                                } catch (err2) {
+                                    showAuthError(err2.code === "auth/email-already-in-use"
+                                        ? "Le compte administrateur existe déjà avec un autre mot de passe. Contactez le développeur."
+                                        : authErrorMessage(err2));
+                                    return;
+                                }
+                            } else { throw err; }
+                        }
+                    }
+                    completeSignIn({ email: entry.email, role: "admin" });
+                } catch (err) {
+                    showAuthError(authErrorMessage(err));
+                } finally {
+                    authBusy = false; btn.disabled = false;
+                }
+                return;
+            }
+
+            // ---------- ESPACE CLIENT : une seule inscription par adresse e-mail ----------
+            const email = document.getElementById("auth-email").value.trim().toLowerCase();
+            const pw2 = document.getElementById("auth-password2").value;
+            if (!email || !pw) return;
+            if (isAdminEmail(email)) { showAuthError("Cette adresse e-mail est réservée."); return; }
+            if (authMode === "register" && pw !== pw2) { showAuthError("Les deux mots de passe ne correspondent pas."); return; }
+            if (pw.length < 6) { showAuthError("Mot de passe trop court (6 caractères minimum)."); return; }
+
+            authBusy = true; btn.disabled = true;
+            const alreadyRegistered = () => {
+                setAuthMode("login");
+                showAuthError("Cette adresse e-mail est déjà inscrite. Connectez-vous avec votre mot de passe.");
+            };
+            try {
+                if (hasFirebaseAuth()) {
+                    const auth = firebase.auth();
+                    const cred = authMode === "register"
+                        ? await auth.createUserWithEmailAndPassword(email, pw)
+                        : await auth.signInWithEmailAndPassword(email, pw);
+                    completeSignIn({ email: cred.user.email, role: "client" });
+                } else {
+                    const users = readLocalUsers();
+                    const hash = await sha256(pw);
+                    if (authMode === "register") {
+                        if (users[email]) { alreadyRegistered(); return; }
+                        users[email] = { hash, role: "client" };
+                        localStorage.setItem(LOCAL_USERS_KEY, JSON.stringify(users));
+                    } else if (!users[email] || users[email].hash !== hash) {
+                        showAuthError("E-mail ou mot de passe incorrect.");
+                        return;
+                    }
+                    completeSignIn({ email, role: "client" });
+                }
+            } catch (err) {
+                if (err && err.code === "auth/email-already-in-use") alreadyRegistered();
+                else showAuthError(authErrorMessage(err));
+            } finally {
+                authBusy = false; btn.disabled = false;
+            }
+        }
+
+        function completeSignIn(user) {
+            currentUser = user;
+            if (!hasFirebaseAuth()) {
+                try { localStorage.setItem(LOCAL_SESSION_KEY, JSON.stringify(user)); } catch (e) {}
+            }
+            startRealtime();
+            updateRoleUI();
+            applyGateState();
+            document.getElementById("auth-password").value = "";
+            document.getElementById("auth-password2").value = "";
+        }
+
+        function updateRoleUI() {
+            document.body.classList.toggle("role-client", !!currentUser && currentUser.role !== "admin");
+            const chip = document.getElementById("user-chip");
+            if (currentUser) {
+                document.getElementById("user-chip-text").textContent = currentUser.role === "admin" ? "Administrateur" : currentUser.email;
+                chip.classList.remove("hidden");
+                chip.classList.add("flex");
+            } else {
+                chip.classList.add("hidden");
+                chip.classList.remove("flex");
+            }
+        }
+
+        function applyGateState() {
+            const gate = document.getElementById("auth-gate");
+            const show = authReady && !currentUser;
+            gate.classList.toggle("hidden", !show);
+            if (show) {
+                document.body.classList.add("overflow-hidden");
+                backToChoice();
+            } else if (currentUser) {
+                document.body.classList.remove("overflow-hidden");
+            }
+        }
+
+        function signOutUser() {
+            const done = () => {
+                try { localStorage.removeItem(LOCAL_SESSION_KEY); } catch (e) {}
+                location.reload();
+            };
+            if (hasFirebaseAuth()) firebase.auth().signOut().then(done, done);
+            else done();
+        }
+
+        function initAuth() {
+            if (hasFirebaseAuth()) {
+                firebase.auth().onAuthStateChanged((user) => {
+                    authReady = true;
+                    if (authBusy) return; // la connexion en cours vérifie d'abord l'espace choisi
+                    if (user) {
+                        completeSignIn({ email: user.email, role: isAdminEmail(user.email) ? "admin" : "client" });
+                    } else {
+                        currentUser = null;
+                        updateRoleUI();
+                        applyGateState();
+                    }
+                });
+            } else {
+                authReady = true;
+                let saved = null;
+                try { saved = JSON.parse(localStorage.getItem(LOCAL_SESSION_KEY)); } catch (e) {}
+                if (saved && saved.email) completeSignIn(saved);
+                else applyGateState();
+            }
+        }
+
+        window.addEventListener("load", () => {
+            initAuth();
+            const splash = document.getElementById("splash-screen");
+            const progressBar = document.getElementById("splash-progress-bar");
+            const statusText = document.getElementById("splash-status-text");
+
+            requestAnimationFrame(() => {
+                if (progressBar) progressBar.style.width = "100%";
+            });
+
+            setTimeout(() => {
+                if (statusText) statusText.textContent = "Synchronisation Cloud en direct...";
+            }, 2000);
+
+            setTimeout(() => {
+                if (splash) {
+                    splash.classList.add("opacity-0", "pointer-events-none");
+                    document.body.classList.remove("overflow-hidden");
+                    applyGateState();
+                    setTimeout(() => splash.style.display = "none", 700);
+                }
+            }, 4000);
+
+            renderAll();
+        });
+
+        // Vérification automatique des échéances toutes les 10 secondes
+        setInterval(renderAll, 10000);
+    </script>
+    <div id="auth-gate" class="hidden fixed inset-0 z-[90] bg-obsidian overflow-y-auto">
+        <div class="min-h-full flex flex-col items-center justify-center px-5 py-10">
+            <div class="text-center mb-8">
+                <div class="w-14 h-14 rounded-2xl bg-gold/15 border border-gold/40 text-gold flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-building"></i></div>
+                <h1 class="font-serif text-3xl font-bold text-white">Immeuble Chris-Van</h1>
+                <p class="text-sm text-gray-400 mt-1">Yaoundé Olembé • Suites meublées</p>
+            </div>
+
+            <div id="auth-choose" class="w-full max-w-md space-y-4">
+                <p class="text-center text-xs uppercase tracking-widest text-gold">Choisissez votre espace</p>
+                <button onclick="chooseSpace('client')" class="w-full text-left p-5 rounded-2xl bg-charcoal border border-white/10 hover:border-gold/60 transition-all flex items-center gap-4">
+                    <span class="w-12 h-12 rounded-xl bg-gold/15 border border-gold/30 text-gold flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-user"></i></span>
+                    <span><span class="block font-serif text-lg font-bold text-white">Espace Client</span><span class="block text-xs text-gray-400 mt-0.5">Réserver une suite et suivre mon pass</span></span>
+                </button>
+                <button onclick="chooseSpace('admin')" class="w-full text-left p-5 rounded-2xl bg-charcoal border border-white/10 hover:border-gold/60 transition-all flex items-center gap-4">
+                    <span class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-user-shield"></i></span>
+                    <span><span class="block font-serif text-lg font-bold text-white">Espace Administrateur</span><span class="block text-xs text-gray-400 mt-0.5">Réception et propriétaire</span></span>
+                </button>
+            </div>
+
+            <div id="auth-form-wrap" class="hidden w-full max-w-md p-6 rounded-2xl bg-charcoal border border-white/10">
+                <button type="button" onclick="backToChoice()" class="text-xs text-gray-400 hover:text-white mb-4"><i class="fa-solid fa-arrow-left mr-1"></i> Changer d'espace</button>
+                <h2 id="auth-title" class="font-serif text-xl font-bold text-white"></h2>
+                <div id="auth-tabs" class="flex gap-1 p-1 rounded-xl bg-obsidian border border-white/10 my-4">
+                    <button type="button" id="auth-tab-login" onclick="setAuthMode('login')">Connexion</button>
+                    <button type="button" id="auth-tab-register" onclick="setAuthMode('register')">Inscription</button>
+                </div>
+                <form onsubmit="handleAuthSubmit(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Adresse e-mail</label>
+                        <input type="email" id="auth-email" required autocomplete="email" placeholder="vous@exemple.com" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Mot de passe</label>
+                        <input type="password" id="auth-password" required minlength="6" autocomplete="current-password" placeholder="6 caractères minimum" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div id="auth-password2-wrap" class="hidden">
+                        <label class="block text-xs text-gray-400 mb-1">Confirmer le mot de passe</label>
+                        <input type="password" id="auth-password2" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div id="auth-error" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs"></div>
+                    <button type="submit" id="auth-submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold to-gold-dark text-obsidian font-bold text-sm">Se connecter</button>
+                </form>
+                <p id="auth-note" class="text-[11px] text-gray-500 mt-4 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="sync-status" style="position:fixed;left:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:60;" class="px-3 py-1.5 rounded-full text-[11px] font-semibold border bg-obsidian/95 border-white/15 text-gray-300 shadow-lg">Connexion…</div>
+</body>
+</html>
